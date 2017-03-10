@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">My Maps</string>
+    <string name="hybrid">Hybrid</string>
+    <string name="satelite">Satelite</string>
+    <string name="map">Map</string>
+    <string name="search_title">Search by position</string>
+    <string name="search_hint"><![CDATA[Input your lang & longitude]]></string>
 </resources>
