@@ -1,6 +1,5 @@
 package id.co.blogspot.tutor93.mymaps;
 
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -12,17 +11,34 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback{
+
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
-                case R.id.navigation_notifications:
+                case R.id.navigation_normal:
+                    if (mapReady){
+                        m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    }
                     return true;
-                case R.id.navigation_favorite:
+                case R.id.navigation_satelite:
+                    if (mapReady){
+                        m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                    }
                     return true;
-                case R.id.navigation_profile:
+                case R.id.navigation_hybrid:
+                    if (mapReady){
+                        m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    }
                     return true;
             }
 
@@ -33,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView searchButton_toolbar;
     private EditText textSearch;
     private Toolbar toolbar;
+    private GoogleMap m_map;
+    private boolean mapReady;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +81,19 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+
+        SupportMapFragment mapFragment = (SupportMapFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment);
+        mapFragment.getMapAsync(this);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mapReady = true;
+        m_map = googleMap;
+//        LatLng mCibodas = new LatLng(-7.011146, 107.764331); //cibodas
+        LatLng mNew_York = new LatLng(40.7484, -73.9857); //new york
+        CameraPosition target = CameraPosition.builder().target(mNew_York).zoom(14).build();
+        m_map.moveCamera(CameraUpdateFactory.newCameraPosition(target));
+    }
 }
