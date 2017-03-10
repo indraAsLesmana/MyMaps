@@ -16,5 +16,4 @@
         android:icon="@drawable/ic_person_outline_black_24dp"
         android:title="@string/hybrid" />
 
-
 </menu>
