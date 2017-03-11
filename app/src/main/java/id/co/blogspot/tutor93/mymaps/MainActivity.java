@@ -24,16 +24,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (mapReady){
                         m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     }
+                    moveCamera(mNew_York);
                     return true;
                 case R.id.navigation_satelite:
                     if (mapReady){
                         m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                     }
+                    moveCamera(mCibodas);
+
                     return true;
                 case R.id.navigation_hybrid:
                     if (mapReady){
                         m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                     }
+                    moveCamera(mNew_York);
                     return true;
             }
 
@@ -43,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap m_map;
     private boolean mapReady;
+    private LatLng mNew_York = new LatLng(40.7484, -73.9857);
+    private LatLng mCibodas = new LatLng(-7.011146, 107.764331); //cibodas
+    private static final int ANIMATE_TIME = 5000; // 5 second
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +71,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mapReady = true;
         m_map = googleMap;
-//      LatLng mCibodas = new LatLng(-7.011146, 107.764331); //cibodas
-        LatLng mNew_York = new LatLng(40.7484, -73.9857); //new york
-        CameraPosition target = CameraPosition.builder().target(mNew_York).zoom(14).build();
-        m_map.moveCamera(CameraUpdateFactory.newCameraPosition(target));
+
+    }
+
+    private void moveCamera(LatLng latLng){
+        CameraPosition target = CameraPosition.builder()
+                .target(latLng)
+                .bearing(112)
+                .tilt(65)
+                .zoom(17)
+                .build();
+
+//        m_map.moveCamera(CameraUpdateFactory.newCameraPosition(target)); // just jump in right into. without animate
+        m_map.animateCamera(CameraUpdateFactory.newCameraPosition(target), ANIMATE_TIME, null);
     }
 }
