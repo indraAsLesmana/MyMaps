@@ -10,10 +10,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -55,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int ANIMATE_TIME = 10000; //10 seconds
     private MarkerOptions cibodasPosition, newYorkPosition;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +70,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         cibodasPosition = new MarkerOptions()
                 .position(mCibodas)
-                .title("CIBODAS");
+                .title("CIBODAS")
+                .icon(BitmapDescriptorFactory
+                        .fromResource(R.drawable.marker));
 
         newYorkPosition = new MarkerOptions()
                 .position(mNew_York)
-                .title("NEW YORK");
+                .title("NEW YORK")
+                .icon(BitmapDescriptorFactory
+                        .fromResource(R.drawable.marker));
 
 
         SupportMapFragment mapFragment = (SupportMapFragment)
@@ -84,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         m_map = googleMap;
         m_map.addMarker(newYorkPosition);
         m_map.addMarker(cibodasPosition);
-        
+
         //on marker click...
         m_map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
