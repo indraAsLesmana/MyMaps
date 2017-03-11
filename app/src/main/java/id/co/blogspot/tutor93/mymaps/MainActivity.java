@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                         moveCamera(mCibodas, false);
                     }
-                    
+
                     return true;
             }
 
@@ -74,17 +74,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void moveCamera(LatLng latLng, boolean isAnimate){
-        CameraPosition target = CameraPosition.builder()
-                .target(latLng)
-                .bearing(112)
-                .tilt(65)
-                .zoom(17)
-                .build();
+        CameraPosition target;
 
         if (isAnimate) {
-            // just jump in right into. without animate
+            target = CameraPosition.builder()
+                    .target(latLng)
+                    .bearing(112)
+                    .tilt(65)
+                    .zoom(17)
+                    .build();
+
             m_map.animateCamera(CameraUpdateFactory.newCameraPosition(target), ANIMATE_TIME, null);
         } else {
+            // just jump in right into. without animate
+            target = CameraPosition.builder()
+                    .target(latLng)
+                    .zoom(17)
+                    .build();
             m_map.moveCamera(CameraUpdateFactory.newCameraPosition(target));
         }
 
