@@ -48,10 +48,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap m_map;
     private boolean mapReady;
-    private LatLng mNew_York = new LatLng(40.7484, -73.9857);
+    private LatLng mNew_York = new LatLng(40.7484, -73.9857); //new york
     private LatLng mCibodas = new LatLng(-7.011146, 107.764331); //cibodas
-    private static final int ANIMATE_TIME = 5000; // 5 second
-
+    private static final int ANIMATE_TIME = 10000; //10 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +92,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .build();
             m_map.moveCamera(CameraUpdateFactory.newCameraPosition(target));
         }
-
     }
 }
