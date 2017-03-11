@@ -23,21 +23,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 case R.id.navigation_normal:
                     if (mapReady){
                         m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        moveCamera(mNew_York, true);
                     }
-                    moveCamera(mNew_York);
                     return true;
                 case R.id.navigation_satelite:
                     if (mapReady){
                         m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                        moveCamera(mCibodas, true);
                     }
-                    moveCamera(mCibodas);
 
                     return true;
                 case R.id.navigation_hybrid:
                     if (mapReady){
                         m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                        moveCamera(mCibodas, false);
                     }
-                    moveCamera(mNew_York);
+                    
                     return true;
             }
 
@@ -50,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LatLng mNew_York = new LatLng(40.7484, -73.9857);
     private LatLng mCibodas = new LatLng(-7.011146, 107.764331); //cibodas
     private static final int ANIMATE_TIME = 5000; // 5 second
-
-
 
 
     @Override
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    private void moveCamera(LatLng latLng){
+    private void moveCamera(LatLng latLng, boolean isAnimate){
         CameraPosition target = CameraPosition.builder()
                 .target(latLng)
                 .bearing(112)
@@ -82,7 +81,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .zoom(17)
                 .build();
 
-//        m_map.moveCamera(CameraUpdateFactory.newCameraPosition(target)); // just jump in right into. without animate
-        m_map.animateCamera(CameraUpdateFactory.newCameraPosition(target), ANIMATE_TIME, null);
+        if (isAnimate) {
+            // just jump in right into. without animate
+            m_map.animateCamera(CameraUpdateFactory.newCameraPosition(target), ANIMATE_TIME, null);
+        } else {
+            m_map.moveCamera(CameraUpdateFactory.newCameraPosition(target));
+        }
+
     }
 }
