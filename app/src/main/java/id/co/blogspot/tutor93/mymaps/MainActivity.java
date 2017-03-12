@@ -1,6 +1,7 @@
 package id.co.blogspot.tutor93.mymaps;
 
 import android.graphics.Color;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final int ANIMATE_TIME = 10000; //10 seconds
     private MarkerOptions cibodasPosition, newYorkPosition;
+    private Marker markerCibodas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +103,11 @@ public class MainActivity extends AppCompatActivity implements
     public void onMapReady(GoogleMap googleMap) {
         mapReady = true;
         m_map = googleMap;
+
+        markerCibodas = m_map.addMarker(cibodasPosition);
+        markerCibodas.showInfoWindow();
+
         m_map.addMarker(newYorkPosition);
-        m_map.addMarker(cibodasPosition);
 
         //on marker click...
         m_map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
