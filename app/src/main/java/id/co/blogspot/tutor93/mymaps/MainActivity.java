@@ -1,5 +1,6 @@
 package id.co.blogspot.tutor93.mymaps;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
@@ -23,7 +24,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class MainActivity extends AppCompatActivity implements
+        OnMapReadyCallback,
+        GoogleMap.OnMapClickListener,
+        GoogleMap.OnMapLongClickListener{
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -121,12 +125,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // 0x represents, this is an hexadecimal code
         // 55 represents percentage of transparency. For 100% transparency, specify 00.
         // For 0% transparency ( ie, opaque ) , specify ff
-        // The remaining 6 characters(4d79ff) specify the fill color
+        // The remaining 6 characters(4d79ff) specify the fill color. contoh :0x554d79ff
+        // untuk fillColor pengen ada effect transparansinya.
+        // cara kedua dengan Helper Color.
+        // Color.argb 64 = tranparansi, 0 = red color, 255 = green color, 0 = blue;
+        // untuk pake coba tulis di google search "rgb color picker"
         * */
        m_map.addCircle(new CircleOptions()
                .center(mCibodas)
-               .strokeColor(ContextCompat.getColor(this, R.color.colorPrimary))
-               .fillColor(0x554d79ff)
+               .strokeColor(Color.BLUE)
+               .fillColor(Color.argb(64, 66, 161, 244))
                .radius(100)); //in meters
 
     }
@@ -151,5 +159,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .build();
             m_map.moveCamera(CameraUpdateFactory.newCameraPosition(target));
         }
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+
     }
 }
