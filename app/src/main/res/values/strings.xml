@@ -5,4 +5,13 @@
     <string name="map">Map</string>
     <string name="search_title">Search by position</string>
     <string name="search_hint"><![CDATA[Input your lang & longitude]]></string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

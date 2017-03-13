@@ -7,6 +7,4 @@
     android:elevation="5dp"
     app:theme="?attr/customToolbarStyle">
 
-
-
 </android.support.v7.widget.Toolbar>
