@@ -2,12 +2,10 @@ package id.co.blogspot.tutor93.mymaps;
 
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,11 +25,10 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
+import id.co.blogspot.tutor93.mymaps.Adapter.ViewPagerAdapter;
+import id.co.blogspot.tutor93.mymaps.Fragment.MapFragment;
+import id.co.blogspot.tutor93.mymaps.Fragment.MapStreeFragment;
 
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback,
@@ -44,23 +41,14 @@ public class MainActivity extends AppCompatActivity implements
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
                 case R.id.navigation_normal:
-                    if (mapReady){
-                        m_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                        moveCamera(mNew_York, true);
-                    }
+                    viewPager.setCurrentItem(0);
                     return true;
-                case R.id.navigation_satelite:
-                    if (mapReady){
-                        m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                        moveCamera(mCibodas, true);
-                    }
 
+                case R.id.navigation_satelite:
+                    viewPager.setCurrentItem(1);
                     return true;
+
                 case R.id.navigation_hybrid:
-                    if (mapReady){
-                        m_map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                        moveCamera(mCibodas, false);
-                    }
 
                     return true;
             }
@@ -86,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements
     private NavigationView navView;
     private ActionBarDrawerToggle toggle;
 
+    private MapFragment mapFragment;
+    private MapStreeFragment mapStreeFragment;
+    private ViewPager viewPager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,17 +89,19 @@ public class MainActivity extends AppCompatActivity implements
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null ){
-            actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
             setUpNavDrawer();
         }
 
+        //Initializing viewPager
+        viewPager = (ViewPager) findViewById(R.id.main_pagger);
+
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-        cibodasPosition = new MarkerOptions()
+        /*cibodasPosition = new MarkerOptions()
                 .position(mCibodas)
                 .title("CIBODAS")
                 .icon(BitmapDescriptorFactory
@@ -116,12 +111,14 @@ public class MainActivity extends AppCompatActivity implements
                 .position(mNew_York)
                 .title("NEW YORK")
                 .icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.marker));
+                        .fromResource(R.drawable.marker));*/
 
 
-        SupportMapFragment mapFragment = (SupportMapFragment)
+        /*SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager().findFragmentById(R.id.map_fragment);
-        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(this);*/
+
+        setupViewPager(viewPager);
     }
 
     @Override
@@ -129,10 +126,10 @@ public class MainActivity extends AppCompatActivity implements
         mapReady = true;
         m_map = googleMap;
 
-        markerCibodas = m_map.addMarker(cibodasPosition);
+        /*markerCibodas = m_map.addMarker(cibodasPosition);
         markerCibodas.showInfoWindow();
 
-        m_map.addMarker(newYorkPosition);
+        m_map.addMarker(newYorkPosition);*/
 
         //on marker click...
         m_map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -272,5 +269,16 @@ public class MainActivity extends AppCompatActivity implements
                 title.setText("Preference Activity");
                 break;
         }*/
+    }
+
+    private void setupViewPager(ViewPager viewPager)
+    {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mapFragment = new MapFragment();
+        mapStreeFragment = new MapStreeFragment();
+
+        adapter.addFragment(mapFragment);
+        adapter.addFragment(mapStreeFragment);
+        viewPager.setAdapter(adapter);
     }
 }

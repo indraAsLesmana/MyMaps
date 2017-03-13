@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_normal"
-        android:icon="@drawable/ic_notifications_none_black_24dp"
+        android:icon="@drawable/ic_map_black_24dp"
         android:title="@string/map"/>
 
     <item
         android:id="@+id/navigation_satelite"
-        android:icon="@drawable/ic_star_border_black_24dp"
-        android:title="@string/satelite"/>
+        android:icon="@drawable/ic_streetview_black_24dp"
+        android:title="@string/street_view"/>
 
     <item
         android:id="@+id/navigation_hybrid"
-        android:icon="@drawable/ic_person_outline_black_24dp"
-        android:title="@string/hybrid" />
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings" />
 
 </menu>
