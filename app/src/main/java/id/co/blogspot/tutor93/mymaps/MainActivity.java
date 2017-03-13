@@ -30,10 +30,7 @@ import id.co.blogspot.tutor93.mymaps.Adapter.ViewPagerAdapter;
 import id.co.blogspot.tutor93.mymaps.Fragment.MapFragment;
 import id.co.blogspot.tutor93.mymaps.Fragment.MapStreeFragment;
 
-public class MainActivity extends AppCompatActivity implements
-        OnMapReadyCallback,
-        GoogleMap.OnMapClickListener,
-        GoogleMap.OnMapLongClickListener{
+public class MainActivity extends AppCompatActivity{
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -41,11 +38,11 @@ public class MainActivity extends AppCompatActivity implements
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
                 case R.id.navigation_normal:
-                    viewPager.setCurrentItem(0);
+                    viewPager.setCurrentItem(ViewPagerAdapter.MAP_FRAGMENT);
                     return true;
 
                 case R.id.navigation_satelite:
-                    viewPager.setCurrentItem(1);
+                    viewPager.setCurrentItem(ViewPagerAdapter.MAP_STREET_FRAGMENT);
                     return true;
 
                 case R.id.navigation_hybrid:
@@ -56,18 +53,6 @@ public class MainActivity extends AppCompatActivity implements
             return false;
         }
     };
-
-    private GoogleMap m_map;
-    private boolean mapReady;
-    private LatLng mNew_York = new LatLng(40.7484, -73.9857); //new york
-    private LatLng mCibodas = new LatLng(-7.011146, 107.764331); //cibodas
-    private LatLng mPatrol = new LatLng(-7.006853, 107.763489); //patrol
-    private LatLng mKutes = new LatLng(-7.007298, 107.758508); //kutes
-    private LatLng mRancaNyiruan = new LatLng(-7.018636, 107.759854); //nyiru
-
-    private static final int ANIMATE_TIME = 10000; //10 seconds
-    private MarkerOptions cibodasPosition, newYorkPosition;
-    private Marker markerCibodas;
 
     private Toolbar toolbar;
     private DrawerLayout navDrawer;
@@ -97,105 +82,10 @@ public class MainActivity extends AppCompatActivity implements
         //Initializing viewPager
         viewPager = (ViewPager) findViewById(R.id.main_pagger);
 
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-        /*cibodasPosition = new MarkerOptions()
-                .position(mCibodas)
-                .title("CIBODAS")
-                .icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.ic_home_red_400_24dp));
-
-        newYorkPosition = new MarkerOptions()
-                .position(mNew_York)
-                .title("NEW YORK")
-                .icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.marker));*/
-
-
-        /*SupportMapFragment mapFragment = (SupportMapFragment)
-                getSupportFragmentManager().findFragmentById(R.id.map_fragment);
-        mapFragment.getMapAsync(this);*/
-
         setupViewPager(viewPager);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mapReady = true;
-        m_map = googleMap;
-
-        /*markerCibodas = m_map.addMarker(cibodasPosition);
-        markerCibodas.showInfoWindow();
-
-        m_map.addMarker(newYorkPosition);*/
-
-        //on marker click...
-        m_map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                moveCamera(marker.getPosition(), true);
-                return true;
-            }
-        });
-
-       /* m_map.addPolyline(new PolylineOptions().geodesic(true)
-        .add(mCibodas)
-        .add(mPatrol)
-        .add(mKutes)
-        .add(mRancaNyiruan)
-        .add(mCibodas));*/
-
-       /**
-        * // Fill color of the circle
-        // 0x represents, this is an hexadecimal code
-        // 55 represents percentage of transparency. For 100% transparency, specify 00.
-        // For 0% transparency ( ie, opaque ) , specify ff
-        // The remaining 6 characters(4d79ff) specify the fill color. contoh :0x554d79ff
-        // untuk fillColor pengen ada effect transparansinya.
-        // cara kedua dengan Helper Color.
-        // Color.argb 64 = tranparansi, 0 = red color, 255 = green color, 0 = blue;
-        // untuk pake coba tulis di google search "rgb color picker"
-        * */
-       m_map.addCircle(new CircleOptions()
-               .center(mCibodas)
-               .strokeColor(Color.BLUE)
-               .fillColor(Color.argb(64, 66, 161, 244))
-               .radius(100)); //in meters
-
-    }
-
-    private void moveCamera(LatLng latLng, boolean isAnimate){
-        CameraPosition target;
-
-        if (isAnimate) {
-            target = CameraPosition.builder()
-                    .target(latLng)
-                    .bearing(112)
-                    .tilt(65)
-                    .zoom(17)
-                    .build();
-
-            m_map.animateCamera(CameraUpdateFactory.newCameraPosition(target), ANIMATE_TIME, null);
-        } else {
-            // just jump in right into. without animate
-            target = CameraPosition.builder()
-                    .target(latLng)
-                    .zoom(17)
-                    .build();
-            m_map.moveCamera(CameraUpdateFactory.newCameraPosition(target));
-        }
-    }
-
-    @Override
-    public void onMapClick(LatLng latLng) {
-
-    }
-
-    @Override
-    public void onMapLongClick(LatLng latLng) {
-
     }
 
     private void setUpNavDrawer() {
@@ -277,8 +167,8 @@ public class MainActivity extends AppCompatActivity implements
         mapFragment = new MapFragment();
         mapStreeFragment = new MapStreeFragment();
 
-        adapter.addFragment(mapFragment);
-        adapter.addFragment(mapStreeFragment);
+        adapter.addFragment(mapFragment); // fragment 0
+        adapter.addFragment(mapStreeFragment); // fragment 1
         viewPager.setAdapter(adapter);
     }
 }

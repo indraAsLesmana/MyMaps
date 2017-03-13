@@ -12,6 +12,9 @@ import java.util.List;
  */
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+    public static final int MAP_FRAGMENT = 0;
+    public static final int MAP_STREET_FRAGMENT = 1;
+
     private final List<Fragment> mFragmentList = new ArrayList<>();
 
     public ViewPagerAdapter(FragmentManager manager) {
