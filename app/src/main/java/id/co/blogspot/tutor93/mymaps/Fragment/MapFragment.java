@@ -1,10 +1,8 @@
 package id.co.blogspot.tutor93.mymaps.Fragment;
 
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import id.co.blogspot.tutor93.mymaps.MainActivity;
 import id.co.blogspot.tutor93.mymaps.R;
 
 /**
@@ -47,12 +44,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     public MapFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
